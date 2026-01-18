@@ -1,2 +1,2 @@
- -q -U google-genai
+google-genai
 flask
