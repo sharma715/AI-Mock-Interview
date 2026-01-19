@@ -31,7 +31,7 @@ def generate_interview():
                 
     
     """
-    client = genai.Client( api_key = "AIzaSyDuCLFYza-vZDtEtNarTCFvdLJrYMDz7-E")
+    client = genai.Client( api_key = "AIzaSyBYYc3v6As3dn0QeWh-koN_ih98e5X_5VQ")
     response  = client.models.generate_content(
         model = "gemini-3-flash-preview",
         contents=prompt
@@ -50,3 +50,4 @@ def generate_interview():
 if __name__ == "__main__":
 
     app.run(host="0.0.0.0",debug= True)
+
