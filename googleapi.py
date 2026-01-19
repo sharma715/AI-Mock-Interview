@@ -8,6 +8,8 @@ app = Flask(__name__)
 @app.route("/generate-interview", methods = ["POST"])
 def generate_interview():
 
+    print("API CALL STARTED")
+
     # data = request.json
     data = request.get_json(silent=True) or {}
 
@@ -31,6 +33,7 @@ def generate_interview():
                 
     
     """
+    print("CONNECTING TO GEMINI AI")
     client = genai.Client( api_key = "AIzaSyBYYc3v6As3dn0QeWh-koN_ih98e5X_5VQ")
     response  = client.models.generate_content(
         model = "gemini-3-flash-preview",
@@ -38,7 +41,7 @@ def generate_interview():
 
         )
 
-    # print(response.text)
+    print(response.text)
 
 
 
@@ -50,4 +53,5 @@ def generate_interview():
 if __name__ == "__main__":
 
     app.run(host="0.0.0.0",debug= True)
+
 
