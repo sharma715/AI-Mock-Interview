@@ -1,14 +1,13 @@
 from flask import Flask, request, jsonify
 from google import genai
+from dotenv import load_dotenv
+import os
 
 
 app = Flask(__name__)
 
-
-@app.route("/generate-interview", methods = ["POST"])
+@app.route("/generate-interview", methods = ["GET"])
 def generate_interview():
-
-    print("API CALL STARTED")
 
     # data = request.json
     data = request.get_json(silent=True) or {}
@@ -19,8 +18,6 @@ def generate_interview():
     no_of_questions = data.get("questions", "5")            
     type_of_interview = data.get("type","technical")              #technical or behavior oriented
     difficulty = data.get("level", "easy")                        #easy or medium or difficult
-
-
 
     prompt = f""" Hey, You are an recuter for {company} company. You have a candidate in interview call. You need to take an interview to that candidate.
                 The tech stack is {tech_stack}.
@@ -33,8 +30,7 @@ def generate_interview():
                 
     
     """
-    print("CONNECTING TO GEMINI AI")
-    client = genai.Client( api_key = "AIzaSyCYhGQ3JeEoLbiT0ofqHm7vI_tkNwIbDqE")
+    client = genai.Client( api_key = os.getenv("gemini_key") )
     response  = client.models.generate_content(
         model = "gemini-3-flash-preview",
         contents=prompt
@@ -45,14 +41,10 @@ def generate_interview():
 
 
 
-
     return jsonify({
         "questions" : response.text
     })
 
 if __name__ == "__main__":
-
-    app.run(host="0.0.0.0",debug= True)
-
-
-
+    load_dotenv()
+    app.run(debug= True)
